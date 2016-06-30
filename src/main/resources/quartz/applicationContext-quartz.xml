@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+       default-lazy-init="true">
+
+    <!-- applicationContext-quartz.xml配置和quartz.properties配置方式二选一 -->
+    <description>Quartz的本地Cron式执行任务配置</description>
+
+    <!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序 -->
+    <bean id="cronQuartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <!-- <ref bean="cronTrigger"/> -->
+                <!-- <ref bean="timerTrigger"/> -->
+                <ref bean="reportTrigger"/>
+                <!-- 月结改成周结-->
+                <ref bean="grabFinanceOrderForNowMonthJobTrigger"/>
+                <!--定时同步更新open_id -->
+                <ref bean="getWxOpenIdJobTrigger"/>
+                <ref bean="autoUpdateConfirmStatusJobTrigger"/>
+                <!--结束活动定时任务-->
+                <ref bean="finishActivityJobTrigger"/>
+            </list>
+        </property>
+        <!-- 启动时延期2秒开始任务 -->
+        <property name="startupDelay" value="2"/>
+        <!-- 以下配置为集群时使用，如不需要则屏蔽
+        quartz配置文件路径, 指向cluster配置
+        <property name="configLocation" value="classpath:/quartz/quartz.properties" />
+        保存Job数据到数据库所需的数据源
+        <property name="dataSource" ref="dataSource" />
+        Job接受applicationContext的成员变量名
+        <property name="applicationContextSchedulerContextKey" value="applicationContext" />
+         -->
+    </bean>
+    <!-- cron表达式定义触发时间 -->
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="cronJobDetail"/>
+        <!-- cron表达式,每天的凌晨1点的10分10秒钟执行  -->
+        <property name="cronExpression" value="0/5 * * ? * *"/>
+    </bean>
+    <!-- 定义调用对象和调用对象的方法 -->
+    <bean id="cronJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <!-- 调用的类 -->
+        <property name="jobClass" value="com.project.quartz.CronJob"/>
+        <property name="durability" value="true"/>
+    </bean>
+
+    <!-- 定时式触发时间定义-->
+    <bean id="timerTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="timerJobDetail"/>
+        <!-- 每次执行间隔5分钟 -->
+        <property name="repeatInterval" value="3000"/>
+    </bean>
+
+    <!-- Timer JobDetail, 基于JobDetailBean实例化Job Class,可持久化到数据库实现集群  -->
+    <bean name="timerJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.project.quartz.TimeJob"/>
+        <property name="durability" value="true"/>
+    </bean>
+
+    <bean id="reportTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="reportJobDetail"/>
+        <!-- cron表达式,每天的23:59:59执行  -->
+        <property name="cronExpression" value="59 59 23 * * ?"/>
+    </bean>
+
+    <bean name="reportJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.project.quartz.ReportJob"/>
+        <property name="durability" value="true"/>
+    </bean>
+
+    <bean id="regionReportTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="regionReportJobDetail"/>
+        <!-- cron表达式,每天的23:59:59执行  -->
+        <property name="cronExpression" value="59 23 14 * * ?"/>
+    </bean>
+
+    <bean name="regionReportJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.project.quartz.regionReportJob"/>
+        <property name="durability" value="true"/>
+    </bean>
+    <!--定时更新客栈微信号的定时任务 -->
+    <bean id="getWxOpenIdJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="getWxOpenIdJobDetail"/>
+        <property name="cronExpression" value="0 0 3 * * ?"></property>
+    </bean>
+    <bean name="getWxOpenIdJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.project.quartz.GetWxOpenIdJob"/>
+        <property name="durability" value="true"/>
+    </bean>
+    <!-- 定时从OMS同步更新本月订单信息-->
+    <bean id="grabFinanceOrderForNowMonthJobTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="grabFinanceOrderForNowMonthJobDetail"/>
+        <property name="cronExpression" value="0 0 4 * * ?"></property>
+    </bean>
+    <bean name="grabFinanceOrderForNowMonthJobDetail"
+          class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.project.quartz.GrabFinanceOrderForNowMonthJob"/>
+        <property name="durability" value="true"/>
+    </bean>
+    <!--定时更新客栈确认结算状态 -->
+    <bean id="autoUpdateConfirmStatusJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="autoUpdateConfirmStatusJobDetail"></property>
+        <property name="cronExpression" value="0 0 * * * ?"></property>
+    </bean>
+    <bean name="autoUpdateConfirmStatusJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.project.quartz.AutoUpdateConfirmStatus"></property>
+        <property name="durability" value="true"></property>
+    </bean>
+    <!--活动结束定时任务-->
+    <bean id="finishActivityJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="finishActivityJobDetail"></property>
+        <property name="cronExpression" value="0 58 23 * * ?"></property>
+    </bean>
+    <bean name="finishActivityJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.project.quartz.OperationActivityJob"></property>
+        <property name="durability" value="true"></property>
+
+    </bean>
+
+</beans>

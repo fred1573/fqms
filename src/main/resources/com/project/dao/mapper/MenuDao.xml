@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.MenuDao">
+
+    <resultMap id="menu" type="com.project.entity.Menu">
+        <id column="id" property="id"/>
+        <result column="sys_menu_name" property="name"/>
+        <result column="sys_menu_code" property="code"/>
+    </resultMap>
+
+    <resultMap id="menuRel" type="com.project.entity.Menu" extends="menu">
+        <collection property="authorityList" column="id"  select="com.project.dao.account.AuthorityDao.selectByMenuId" ofType="com.project.entity.account.Authority"/>
+    </resultMap>
+
+
+    <select id="selectAll" resultMap="menuRel" >
+        select id,sys_menu_name,sys_menu_code from tomato_sys_menu
+    </select>
+
+
+</mapper>

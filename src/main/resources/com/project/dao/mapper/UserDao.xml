@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.account.UserDao">
+
+    <resultMap id="user" type="com.project.entity.account.User">
+        <id column="id" property="id"/>
+        <result column="sys_user_code" property="sysUserCode"/>
+        <result column="sys_user_pwd" property="sysUserPwd"/>
+        <result column="sys_user_name" property="sysUserName"/>
+        <result column="sex" property="sex"/>
+        <result column="phone" property="phone"/>
+        <result column="mobile" property="mobile"/>
+        <result column="email" property="email"/>
+        <result column="status" property="status"/>
+        <result column="create_user_code" property="createUserCode"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user_code" property="updateUserCode"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="last_lended_time" property="lastLendedTime"/>
+        <result column="rmk" property="rmk"/>
+        <result column="token" property="token"/>
+    </resultMap>
+
+    <resultMap id="userRel" type="com.project.entity.account.User" extends="user">
+        <collection property="roleList" column="id"  select="com.project.dao.account.RoleDao.selectByUserId" ofType="com.project.entity.account.Role"/>
+    </resultMap>
+
+
+    <select id="selectBySysUserCode" resultMap="userRel" >
+        select * from tomato_sys_user where sys_user_code=#{sysUserCode} and status!='LOCKED'
+    </select>
+
+    <select id="selectById" resultMap="userRel" >
+        select * from tomato_sys_user where id=#{id} and status!='LOCKED'
+    </select>
+
+    <insert id="insert" parameterType="com.project.entity.account.User">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            select nextval('tomato_sys_user_id_seq'::regclass)
+        </selectKey>
+        insert into tomato_sys_user (id,sys_user_code,sys_user_pwd,sys_user_name,sex,phone,mobile,email,status,create_user_code,create_time,update_user_code,update_time,last_lended_time,rmk,token)
+        values (#{id},#{sysUserCode},#{sysUserPwd},#{sysUserName},#{sex},#{phone},#{mobile},#{email},#{status},#{createUserCode},#{createTime},#{updateUserCode},#{updateTime},#{lastLendedTime},#{rmk},#{token})
+    </insert>
+
+    <update id="update">
+        update tomato_sys_user set sys_user_code=#{sysUserCode},sys_user_pwd=#{sysUserPwd},sys_user_name=#{sysUserName}
+        ,sex=#{sex},phone=#{phone},mobile=#{mobile},email=#{email},status=#{status},create_user_code=#{createUserCode}
+        ,create_time=#{createTime},update_user_code=#{updateUserCode},update_time=#{updateTime},last_lended_time=#{lastLendedTime},rmk=#{rmk},token=#{token}
+        where id=#{id}
+    </update>
+
+    <select id="selectByPage" resultMap="userRel">
+        select  u.* from tomato_sys_user u
+        left join tomato_sys_user_role ur on u.id = ur.sys_user_id
+        <where>
+            <if test="userName != null and userName.length() > 0">
+                <bind name="likeUserName" value="'%' + userName + '%'" />
+                (u.sys_user_code like #{likeUserName}or sys_user_name like #{likeUserName})
+            </if>
+            and ur.sys_role_id =${roleId} and u.status!='LOCKED'
+        </where>
+    </select>
+
+
+    <update id="updateLastLendedTime">
+        update tomato_sys_user set last_lended_time=now() where sys_user_code=#{userCode}
+    </update>
+
+    <insert id="insertRole">
+        insert into tomato_sys_user_role (id,sys_role_id,sys_user_id)
+        values
+        <foreach item="role" index="index" collection="roleList"  separator=",">
+            (nextval('tomato_sys_user_role_id_seq'::regclass),${role.id},${id})
+        </foreach>
+    </insert>
+
+    <delete id="deleteRoleById">
+        delete from tomato_sys_user_role where sys_user_id=#{id}
+    </delete>
+
+    <update id="updateStatus">
+        update tomato_sys_user set status=#{status} where id=#{id}  and status!='LOCKED'
+    </update>
+
+    <update id="updateStatusByRoleId">
+        <bind name="likeId" value="'%' + roleId + '%'" />
+        update tomato_sys_user  set status=#{status} from tomato_sys_user_role,tomato_sys_role
+        where tomato_sys_user_role.sys_user_id=tomato_sys_user.id and tomato_sys_role.id=tomato_sys_user_role.sys_role_id and tomato_sys_user.status!='LOCKED'
+        and (tomato_sys_role.id=#{roleId}  or tomato_sys_role.path like #{likeId})
+    </update>
+</mapper>

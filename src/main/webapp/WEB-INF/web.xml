@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
+
+    <!-- tomcat session 共享标签 -->
+    <distributable/>
+
+    <display-name>fqms</display-name>
+
+    <!-- Spring ApplicationContext配置文件的路径,可使用通配符,多个路径用,号分隔
+        此参数用于后面的Spring Context Loader -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath*:/applicationContext.xml
+            classpath*:/applicationContext-import.xml
+        </param-value>
+    </context-param>
+    <context-param>
+        <param-name>spring.profiles.default</param-name>
+        <param-value>production</param-value>
+    </context-param>
+
+    <!-- spring mvc 配置 -->
+    <servlet>
+        <servlet-name>springMVC</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/spring-mvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>springMVC</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <!-- CXF 配置 -->
+    <servlet>
+        <servlet-name>CXFServlet</servlet-name>
+        <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CXFServlet</servlet-name>
+        <url-pattern>/services/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- 后台服务器servlet对话入口配置  -->
+    <servlet>
+        <servlet-name>backInteractiveServlet</servlet-name>
+        <servlet-class>com.project.servlet.Interactive</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>backInteractiveServlet</servlet-name>
+        <url-pattern>/backInteractiveServlet</url-pattern>
+    </servlet-mapping>
+
+    <!-- Content Servlet 配置 -->
+    <servlet>
+        <servlet-name>StaticContentServlet</servlet-name>
+        <servlet-class>com.project.servlet.StaticContentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RemoteContentServlet</servlet-name>
+        <servlet-class>com.project.servlet.RemoteContentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StaticContentServlet</servlet-name>
+        <url-pattern>/static-content</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoteContentServlet</servlet-name>
+        <url-pattern>/remote-content</url-pattern>
+    </servlet-mapping>
+
+    <!-- Druid的监控统计功能 -->
+    <servlet>
+        <servlet-name>DruidStatView</servlet-name>
+        <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DruidStatView</servlet-name>
+        <url-pattern>/druid/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- Filter 定义  -->
+    <!-- Character Encoding filter -->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+
+    <!-- 特殊字符过滤，session失效，随机码校验  -->
+    <filter>
+        <filter-name>CharFilter</filter-name>
+        <filter-class>com.project.filter.CharFilter</filter-class>
+        <init-param>
+            <param-name>excludeURL</param-name>
+            <param-value></param-value>
+        </init-param>
+        <init-param>
+            <param-name>appServer</param-name>
+            <param-value>tomcat</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CharFilter</filter-name>
+        <url-pattern>*.action</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+
+    <!-- jcaptcha图片生成URL. -->
+    <filter>
+        <filter-name>jcaptchaFilter</filter-name>
+        <filter-class>com.project.core.captcha.filter.JCaptchaFilter</filter-class>
+        <init-param>
+            <param-name>failureUrl</param-name>
+            <param-value>/login?error=captchaError</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>jcaptchaFilter</filter-name>
+        <url-pattern>/security/jcaptcha.jpg</url-pattern>
+    </filter-mapping>
+    <!-- jcaptcha登录表单处理URL. 必须放在springSecurityFilter的filter-mapping定义之前 -->
+    <filter-mapping>
+        <filter-name>jcaptchaFilter</filter-name>
+        <url-pattern>/user_login</url-pattern>
+    </filter-mapping>
+
+    <!-- Hibernate Open Session In View filter-->
+    <filter>
+        <filter-name>hibernateOpenSessionInViewFilter</filter-name>
+        <filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
+        <init-param>
+            <param-name>excludeSuffixs</param-name>
+            <param-value>js,css,jpg,gif,png</param-value>
+        </init-param>
+        <init-param>
+            <param-name>sessionFactoryBeanName</param-name>
+            <param-value>sessionFactory</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>hibernateOpenSessionInViewFilter</filter-name>
+        <url-pattern>*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+
+    <!-- SpringSecurity filter-->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- sitemesh3 -->
+    <filter>
+        <filter-name>sitemesh</filter-name>
+        <filter-class>org.sitemesh.config.ConfigurableSiteMeshFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>sitemesh</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+
+    <!-- Cache Control Header Filter -->
+    <filter>
+        <filter-name>cacheControlHeaderFilter</filter-name>
+        <filter-class>com.project.filter.CacheControlHeaderFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>cacheControlHeaderFilter</filter-name>
+        <url-pattern>/images/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>cacheControlHeaderFilter</filter-name>
+        <url-pattern>/css/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>cacheControlHeaderFilter</filter-name>
+        <url-pattern>/js/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>cacheControlHeaderFilter</filter-name>
+        <url-pattern>/ckeditor/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>cacheControlHeaderFilter</filter-name>
+        <url-pattern>/ckfinder/*</url-pattern>
+    </filter-mapping>
+
+    <!-- WebStatFilter用于采集web-jdbc关联监控的数据 -->
+    <filter>
+        <filter-name>DruidWebStatFilter</filter-name>
+        <filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
+        <init-param>
+            <param-name>exclusions</param-name>
+            <param-value>*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>DruidWebStatFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--Spring的ApplicationContext 载入 -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!-- Spring 刷新Introspector防止内存泄露 -->
+    <listener>
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
+
+    <!--Spring security Session 监听  -->
+    <listener>
+        <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+    </listener>
+
+    <!-- 缓存加载监听器 -->
+    <listener>
+        <listener-class>com.project.cache.listener.CacheListener</listener-class>
+    </listener>
+
+    <!-- session超时定义,单位为分钟, 超时时间由30分钟改为1天 -->
+    <session-config>
+        <session-timeout>1440</session-timeout>
+    </session-config>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <!-- 出错页面定义 -->
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/common/500.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/common/500.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>401</error-code>
+        <location>/401.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/common/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/common/403.jsp</location>
+    </error-page>
+</web-app>

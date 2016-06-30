@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="ehcache.xsd"
+         updateCheck="true" monitoring="autodetect"
+         dynamicConfig="true">
+
+	<diskStore path="java.io.tmpdir/ehcache/fqms" />
+
+	<!-- DefaultCache setting. -->
+	<defaultCache maxEntriesLocalHeap="10000" eternal="false" timeToIdleSeconds="300" 
+            timeToLiveSeconds="300" overflowToDisk="true" diskSpoolBufferSizeMB="30" 
+            maxEntriesLocalDisk="10000000" diskPersistent="false" 
+            diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
+
+	<!-- Special objects setting. -->
+	<cache name="com.project.entity.account.User" maxEntriesLocalHeap="10000"
+		memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true" maxEntriesLocalDisk="1000000" />
+	<cache name="com.project.entity.account.User.roleList" maxEntriesLocalHeap="10000"
+		memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true" maxEntriesLocalDisk="1000000" />
+	<cache name="com.project.entity.account.User.regionList" maxEntriesLocalHeap="10000"
+		memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true" maxEntriesLocalDisk="1000000" />
+	<cache name="com.project.entity.account.Role" maxEntriesLocalHeap="10000"
+		memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true" maxEntriesLocalDisk="1000000" />
+	<cache name="com.project.entity.account.Role.roleAuthorityList" maxEntriesLocalHeap="10000"
+		memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true" maxEntriesLocalDisk="1000000" />
+	<cache name="com.project.entity.account.Authority" maxEntriesLocalHeap="10000"
+		memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true" maxEntriesLocalDisk="1000000" />
+		
+	<!-- 系统级默认缓存配置 -->
+	<cache name="sysCache" maxEntriesLocalHeap="10000" eternal="false" overflowToDisk="true" 
+		maxEntriesLocalDisk="10000000" diskSpoolBufferSizeMB="20" />
+	
+	<!-- 字典表缓存配置 -->
+	<cache name="sysConstantCache" maxEntriesLocalHeap="10000" eternal="true" overflowToDisk="true"
+		maxEntriesLocalDisk="10000000" diskSpoolBufferSizeMB="10" />
+	
+	<!-- 所有客栈缓存 -->
+	<cache name="innCache" maxEntriesLocalHeap="10000" eternal="false" timeToLiveSeconds="3600" overflowToDisk="true" 
+		diskSpoolBufferSizeMB="30" maxEntriesLocalDisk="100000" diskPersistent="false" />
+		
+	<cache name="wgRoomTypeCache" maxEntriesLocalHeap="1000" eternal="true" memoryStoreEvictionPolicy="LRU" >
+		<persistence strategy="localTempSwap"/>
+	</cache>
+	
+</ehcache>

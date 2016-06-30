@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.proxysale.ProxySaleOrderComplaintDao">
+
+    <resultMap id="proxySaleOrderComplaint" type="com.project.entity.proxysale.ProxySaleOrderComplaint">
+        <id column="id" property="id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="finishUserId" column="finish_user_id"/>
+        <result property="finishUserName" column="finish_user_name"/>
+        <result property="finishTime" column="finish_time"/>
+        <result property="complaintType" column="complaint_type"/>
+        <result property="complaintStatus" column="complaint_status"/>
+        <result property="channelId" column="channel_id"/>
+        <result property="channelName" column="channel_name"/>
+        <result property="channelChildId" column="channel_child_id"/>
+        <result property="channelCodeName" column="channel_code_name"/>
+        <result property="regionName" column="region_name"/>
+        <result property="innId" column="inn_id"/>
+        <result property="innName" column="inn_name"/>
+        <result property="innPhone" column="phone"/>
+        <result property="customerManager" column="customer_manager"/>
+        <result property="channelOrderNo" column="channel_order_no"/>
+        <result property="userName" column="user_name"/>
+        <result property="contact" column="contact"/>
+        <result property="totalAmount" column="total_amount"/>
+        <result property="orderTime" column="order_time"/>
+        <result property="orderNo" column="order_no"/>
+    </resultMap>
+    <resultMap id="proxySaleOrderComplaintRel" type="com.project.entity.proxysale.ProxySaleOrderComplaint" extends="proxySaleOrderComplaint">
+        <collection property="channelOrderList" ofType="com.project.entity.proxysale.ProxySaleSubOrder">
+            <id property="id" column="sub_id"/>
+            <result property="createTime" column="sub_create_time"/>
+            <result property="updateTime" column="sub_update_time"/>
+            <result property="channelRoomTypeName" column="channel_room_type_name"/>
+            <result property="roomNums" column="room_nums"/>
+            <result property="checkInAt" column="check_in_at"/>
+            <result property="checkOutAt" column="check_out_at"/>
+            <result property="orderComplaintId" column="order_complaint_id"/>
+        </collection>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.project.entity.proxysale.ProxySaleOrderComplaint">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            select nextval('tomato_proxysale_order_complaint_id_seq'::regclass)
+        </selectKey>
+        insert into tomato_proxysale_order_complaint
+        (id,create_time,update_time,finish_user_id,finish_user_name,finish_time,complaint_type,complaint_status,channel_id,channel_name,channel_child_id,channel_code_name,region_name,inn_id,inn_name
+        ,customer_manager,channel_order_no,user_name,contact,total_amount,order_time,order_no)
+        values
+        (#{id},#{createTime},#{updateTime},#{finishUserId},#{finishUserName},#{finishTime},#{complaintType},#{complaintStatus},#{channelId},#{channelName},#{channelChildId},#{channelCodeName},#{regionName},#{innId},#{innName}
+        ,#{customerManager},#{channelOrderNo},#{userName},#{contact},#{totalAmount},#{orderTime},#{orderNo})
+    </insert>
+
+    <insert id="insertSubOrderList" >
+        insert into tomato_proxy_sale_sub_order (create_time,update_time,channel_room_type_name,room_nums,check_in_at,check_out_at,order_complaint_id)
+        values
+        <foreach item="order" index="index" collection="list"  separator=",">
+            (#{order.createTime},#{order.updateTime},#{order.channelRoomTypeName},#{order.roomNums},#{order.checkInAt},#{order.checkOutAt},#{order.orderComplaintId})
+        </foreach>
+    </insert>
+
+    <select id="selectByOrderNo" resultMap="proxySaleOrderComplaint">
+        select * from tomato_proxysale_order_complaint where order_no=#{orderNo}
+    </select>
+
+    <select id="selectById" resultMap="proxySaleOrderComplaint">
+        select * from tomato_proxysale_order_complaint where id=#{id}
+    </select>
+
+    <update id="update">
+        update tomato_proxysale_order_complaint set update_time=#{updateTime},finish_user_id=#{finishUserId},finish_user_name=#{finishUserName},finish_time=#{finishTime},complaint_status=#{complaintStatus},complaint_type=#{complaintType}
+        where id=#{id}
+    </update>
+
+    <sql id="searchWhere">
+        <where>
+            <if test="complaintSearch.queryValue!=null and complaintSearch.queryValue.length()>0">
+                <if test="complaintSearch.searchType!=null and 'REGION_NAME' eq complaintSearch.searchType.name()">
+                    tpoc.region_name =#{complaintSearch.queryValue}
+                </if>
+                <if test="complaintSearch.searchType!=null and 'CUSTOMER_MANAGER' eq complaintSearch.searchType.name()">
+                    and tpoc.customer_manager=#{complaintSearch.queryValue}
+                </if>
+                <if test="complaintSearch.searchType!=null and 'INN_NAME' eq complaintSearch.searchType.name()">
+                    <bind name="pattern" value="'%' + complaintSearch.queryValue + '%'" />
+                    and tpoc.inn_name like #{pattern}
+                </if>
+            </if>
+            <if test="complaintSearch.searchTimeType!=null and 'CHECK_IN_AT' eq complaintSearch.searchTimeType.name()">
+                <![CDATA[and ( tpsso.check_in_at >=#{complaintSearch.startTime} and tpsso.check_in_at<=#{complaintSearch.endTime} )]]>
+            </if>
+            <if test="complaintSearch.searchTimeType!=null and 'CHECK_OUT_AT' eq complaintSearch.searchTimeType.name()">
+                <![CDATA[and ( tpsso.check_out_at >=#{complaintSearch.startTime} and tpsso.check_out_at<=#{complaintSearch.endTime} )]]>
+            </if>
+            <if test="complaintSearch.searchTimeType!=null and 'ORDER_TIME' eq complaintSearch.searchTimeType.name()">
+                <![CDATA[and ( tpoc.order_time >=#{complaintSearch.startTime} and tpoc.order_time<=#{complaintSearch.endTime} )]]>
+            </if>
+            <if test="complaintSearch.searchTimeType!=null and 'CREATE_TIME' eq complaintSearch.searchTimeType.name()">
+                <![CDATA[and ( tpoc.create_time >=#{complaintSearch.startTime} and tpoc.create_time<=#{complaintSearch.endTime} )]]>
+            </if>
+
+            <if test="complaintSearch.complaintType !=null">
+                and tpoc.complaint_type=#{complaintSearch.complaintType}
+            </if>
+            <if test="complaintSearch.complaintStatus !=null">
+                and tpoc.complaint_status=#{complaintSearch.complaintStatus}
+            </if>
+            <if test="complaintSearch.channelName!=null and complaintSearch.channelName.length()>0">
+                and tpoc.channel_name=#{complaintSearch.channelName}
+            </if>
+            <if test="complaintSearch.childChannelName!=null and complaintSearch.childChannelName.length()>0">
+                and tpoc.channel_code_name=#{complaintSearch.childChannelName}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectByPage" resultMap="proxySaleOrderComplaintRel">
+        select * from tomato_proxysale_order_complaint as tpoc
+        left join tomato_proxy_sale_sub_order as tpsso on tpsso.order_complaint_id=tpoc.id
+        left join tomato_proxysale_inn as tpi on tpi.inn=tpoc.inn_id
+        <include refid="searchWhere"/>
+    </select>
+
+    <select id="selectInnCountBySearch" resultType="java.lang.Integer">
+
+        select count(1) from (
+        select tpoc.inn_id from tomato_proxysale_order_complaint as tpoc
+        left join tomato_proxy_sale_sub_order as tpsso on tpsso.order_complaint_id=tpoc.id
+        <include refid="searchWhere"/>
+        group by tpoc.inn_id
+        ) as tmp
+
+
+    </select>
+
+</mapper>

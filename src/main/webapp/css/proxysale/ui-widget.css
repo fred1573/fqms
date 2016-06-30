@@ -1,0 +1,212 @@
+/*JS组件 ----------命名：ui-XX*/
+/*  下拉框 */
+.ui-dropdown {
+	position: relative;
+	display: inline-block;
+	white-space: nowrap;
+}
+
+.ui-dropdown>a{
+	position: relative;
+	display: inline-block;
+	padding: 0px 25px 0 6px;
+	border: 1px solid #ccc;
+	text-decoration: none;
+}
+
+.ui-dropdown>a:hover {
+	color: #555;;
+}
+
+.disabled>a {
+	cursor: not-allowed;
+	color: #ccc !important;
+}
+
+.ui-dropdown>a>i {
+	position: absolute;
+	top: 0;
+	right: 8px;
+}
+
+.ui-dropdown-list {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	/*float: left;*/
+	min-width: 99%;
+	margin: -1px 0 0 0px;
+	text-align: left;
+	list-style: none;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	box-shadow: 0 2px 4px rgba(0,0,0,.2);
+}
+
+.ui-dropdown-list>a {
+	position: relative;
+	display: block;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 6px;
+	white-space: nowrap;
+}
+
+.ui-dropdown-list>a:hover, .ui-dropdown-list>a:focus {
+	color: #fff;
+	background-color: #cf2d01;
+	text-decoration: none;
+}
+
+.ui-dropdown-list>.disabled {
+	cursor: not-allowed;
+	color: #ccc !important;
+}
+
+.open>.ui-dropdown-list {
+	display: block;
+}
+
+/* ui-dropdown-menu 菜单样式 下拉框*/
+.ui-dropdown-menu>a {
+	padding: 0;
+	border: none;
+}
+
+.ui-dropdown-menu>a>i {
+	position: static;
+	top: auto;
+	left: auto;
+}
+
+.ui-dropdown-menu>.ui-dropdown-list {
+	border-top: 3px solid #a9221c;
+	border-radius: 5px 5px 0 0;
+}
+
+.ui-dropdown-menu>.ui-dropdown-list>a {
+	border-bottom: 1px solid #eeeeee;
+	padding: 0 16px;
+}
+
+.ui-dropdown-menu>.ui-dropdown-list>a:hover, .ui-dropdown-menu>.ui-dropdown-list>a:focus {
+	color: #a9221c;;
+	background-color: #EFF1F5;
+}
+
+/*  .ui-dropdown-right 下拉菜单右对齐 */
+.ui-dropdown-right>.ui-dropdown-list {
+	left: auto;
+	right: 0;
+}
+
+
+
+/********************* jquery ui tooltip  ************************/
+.ui-tooltip {
+	border: 0;
+	background: #666666;;
+	color: #fff;
+}
+.ui-corner-all {
+	border-radius: 0;
+}
+
+
+/*****************************************************************
+ *
+ * 弹出层
+ * 
+ * ui-popups
+ *
+ ****************************************************************/
+.ui-popups {
+	display: none;
+	position: fixed;
+	z-index: 5;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	
+	text-align: center;
+	overflow: auto;
+}
+
+.ui-popups:after {
+	display: inline-block;
+	vertical-align: middle;
+	content: '';
+	height: 100%;
+	margin-left: -0.25em;
+}
+
+.ui-popups-dialog {
+	position: relative;
+	display: inline-block;
+ 	vertical-align: middle;
+	max-width: 99%;
+   	/*max-width: calc(100% - 0.25em) /* Only for IE9+ */
+	background-color: #ffffff;
+}
+
+.ui-popups-backdrop {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	opacity: .5;
+	filter:alpha(opacity=50);  /*支持 IE 浏览器*/
+	-moz-opacity:0.50; /*支持 FireFox 浏览器*/
+	background-color: #000;
+}
+
+.ui-popups-head {
+	padding: 8px 0;
+	background-color: #f2f2f2;
+}
+
+.ui-popups-dialog>.close {
+	position: absolute;
+	right: -36px;
+	width: 36px;
+	height: 36px;
+	color: #b4a39d;
+	font-size: 21px;
+	font-weight: 500;
+	line-height: 36px;
+	text-align: center;
+	background-color: #4c4c4c;
+	cursor: pointer;
+}
+
+.ui-popups-title {
+	font-size: 14px;
+	text-align: left;
+	color: #666666;
+	padding-left: 14px;
+	border-left: solid 4px #e84544;
+}
+
+.ui-popups-body {
+	padding: 15px 24px;
+	text-align: left;
+}
+
+.ui-popups-tools {
+	margin-bottom: 14px;
+}
+
+.ui-popups-content {
+	/*max-height: 80px;*/
+	/*border: solid 1px #dddddd;*/
+	overflow: auto;
+}
+
+.ui-popups-foot {
+	padding: 15px 24px;
+	padding-top: 0;
+	text-align: left;
+}

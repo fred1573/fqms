@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+	default-lazy-init="true">
+
+	<description>web启动缓存加载配置 </description>
+	
+	<!-- Spring集成EHCache -->
+	<bean id="sysCacheManager" class="com.project.cache.manager.LoadCacheDataManager">
+		<property name="caches">
+			<list>
+				<ref local="sysConstantCache" />
+				<ref local="regionCache" />
+				<ref local="innCache" />
+				<ref local="authorityCache" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="sysConstantCache" class="com.project.cache.SysConstantCache"></bean>
+	
+	<bean id="regionCache" class="com.project.cache.RegionCache"></bean>
+	
+	<bean id="innCache" class="com.project.cache.InnCache"></bean>
+	
+	<bean id="authorityCache" class="com.project.cache.AuthorityCache"></bean>
+	
+</beans>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+	<http pattern="/css/**" security="none" />
+	<http pattern="/editor/*" security="none" />
+	<http pattern="/images/**" security="none" />
+	<http pattern="/js/**" security="none" />
+	<http pattern="/login*" security="none" />
+	<http pattern="/innTask/*" security="none" />
+	<http pattern="/proxysale/api/**" security="none" />
+	<http pattern="/finance/api/**" security="none" />
+	<http pattern="/api/finance/**" security="none" />
+	<http pattern="/activity/application" security="none" />
+	<http pattern="/activity/all" security="none" />
+	<!-- <http pattern="/*" security="none" /> -->
+
+
+    <!-- http安全配置 -->
+    <http auto-config="true">
+        <intercept-url pattern="/**" access="ROLE_ROOT"/>
+
+        <form-login login-processing-url="/user_login" login-page="/login"
+                    default-target-url="/" authentication-success-handler-ref="customerLoginSuccessHandler"
+                    authentication-failure-url="/login?error=true"/>
+
+        <!-- invalidate-session="false":点击退出后session不失效。
+            默认为true，则点击退出后页面调转至session-management节点中的invalid-session-url，
+            如果不希望退出后调转至invalid-session-url，则需要配置invalidate-session="false"，
+            使session在web.xml设置的有效期后自动失效，而非点击退出后失效
+        -->
+        <logout logout-url="/logout" logout-success-url="/login" invalidate-session="true" delete-cookies="JSESSIONID"/>
+        <!-- <logout logout-url="/logout" success-handler-ref="customerLogoutSuccessHandler"/> -->
+
+        <!--
+            session-fixation-protection="none"：防止伪造sessionid攻击. 用户登录成功后会销毁用户当前的session,并创建新的session,同时把用户信息复制到新session中;
+            invalid-session-url：失效的session ID用户转发的URL.
+            如果需要控制会话数，配置为：
+            max-sessions：最大会话数；error-if-maximum-exceeded：超出最大会话数后是否禁止登陆;expired-url:超出最大会话数时跳转页面
+            由于默认超出最大会话数时跳转到invalid-session-url，如果需要使用expired-url，则需要去掉invalid-session-url，
+            同时session失效的判断放到	filter去做，例如：
+            if(req.getSession(false)==null && req.getSession().isNew()){
+                res.sendRedirect(req.getContextPath() + "/login.action?error=sessionTimeout");
+                return;
+            }
+        -->
+        <session-management session-fixation-protection="none" invalid-session-url="/login?error=sessionTimeout">
+            <concurrency-control max-sessions="2" error-if-maximum-exceeded="false"
+                                 expired-url="/login.action?error=overMaxSession"/>
+        </session-management>
+
+    </http>
+
+    <!-- 登入操作 -->
+    <beans:bean id="customerLoginSuccessHandler" class="com.project.core.security.CustomerLoginSuccessHandler"/>
+    <beans:bean id="customerLoginFailureHandler" class="com.project.core.security.CustomerLoginFailureHandler"/>
+
+    <!-- 登出操作 -->
+    <beans:bean id="customerLogoutSuccessHandler" class="com.project.core.security.CustomerLogoutSuccessHandler"/>
+
+    <!-- 认证配置 -->
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider ref="daoAuthenticationProvider"/>
+    </authentication-manager>
+
+    <!-- 自定义认证提供者 -->
+    <beans:bean id="daoAuthenticationProvider"
+                class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <beans:property name="userDetailsService" ref="userDetailsService"/>
+        <beans:property name="passwordEncoder" ref="passwordEncoder"/>
+        <beans:property name="saltSource" ref="saltSource"/>
+        <beans:property name="hideUserNotFoundExceptions" value="false"/>
+    </beans:bean>
+
+    <!-- 登陆入口,获取用户信息 -->
+    <beans:bean id="userDetailsService" class="com.project.service.account.UserDetailsServiceImpl"/>
+
+    <beans:bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+        <beans:property name="encodeHashAsBase64" value="false"/>
+    </beans:bean>
+
+    <beans:bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">
+        <beans:property name="userPropertyToUse" value="username"/>
+    </beans:bean>
+
+    <!-- 默认访问决策器 -->
+    <beans:bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+        <beans:property name="allowIfAllAbstainDecisions" value="false"/>
+        <beans:property name="decisionVoters">
+            <beans:list>
+                <beans:bean class="org.springframework.security.access.vote.RoleVoter"/>
+                <beans:bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+
+    <beans:bean id="securityMetadataSource" class="com.project.core.security.CustomerSecurityMetadataSource"/>
+
+    <global-method-security secured-annotations="enabled">
+        <protect-pointcut expression="execution(* com.project.service.*Service.*(..))" access="ROLE_ROOT"/>
+    </global-method-security>
+
+    <!--JCaptcha验证码服务 -->
+    <beans:bean id="captchaService" class="com.octo.captcha.service.image.DefaultManageableImageCaptchaService">
+        <beans:property name="captchaEngine">
+            <beans:bean class="com.project.core.captcha.GMailEngine"/>
+        </beans:property>
+        <!-- 默认生成的图片180秒过期 , 可另行设置
+        <beans:property name="minGuarantedStorageDelayInSeconds" value="180" />
+        -->
+    </beans:bean>
+
+</beans:beans>

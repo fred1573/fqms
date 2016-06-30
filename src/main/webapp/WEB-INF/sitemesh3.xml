@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sitemesh>
+
+  <mapping path="/*" decorator="/decorator/decorator.jsp"/>
+  
+  <mapping path="/common/403.jsp" decorator="/decorator/decorator-input.jsp"/>
+  <mapping path="/common/404.jsp" decorator="/decorator/decorator-input.jsp"/>
+  <mapping path="/common/500.jsp" decorator="/decorator/decorator-input.jsp"/>
+  
+  <!-- 登陆  -->
+  <mapping path="/login" decorator="/decorator/decorator-login.jsp"/>
+  
+  <!-- 系统管理  -->
+  <mapping path="/account/user/input*" decorator="/decorator/decorator-input.jsp"/>
+  <mapping path="/account/user/modifyPwd*" decorator="/decorator/decorator-input.jsp"/>
+
+  <!-- mobile -->
+  <mapping path="/proxysale/api/inn/price/record_code" decorator="/decorator/decorator-mobile.jsp"/>
+
+</sitemesh>

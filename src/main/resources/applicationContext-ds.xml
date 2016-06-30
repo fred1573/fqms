@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <beans profile="dev">
+        <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+            <property name="url" value="jdbc:postgresql://192.168.1.17:5432/tomato" />
+            <property name="username" value="ota" />
+            <property name="password" value="ota" />
+            <property name="initialSize" value="1" />
+            <property name="minIdle" value="1" />
+            <property name="maxActive" value="5" />
+            <property name="maxWait" value="60000" />
+            <property name="validationQuery" value="SELECT 'x'" />
+            <property name="testOnBorrow" value="false" />
+            <property name="testOnReturn" value="false" />
+            <property name="testWhileIdle" value="true" />
+            <property name="timeBetweenEvictionRunsMillis" value="60000" />
+            <property name="minEvictableIdleTimeMillis" value="300000" />
+            <property name="removeAbandoned" value="true" />
+            <property name="removeAbandonedTimeout" value="1800" />
+            <property name="logAbandoned" value="true" />
+            <property name="poolPreparedStatements" value="true" />
+            <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+            <property name="filters" value="mergeStat" />
+        </bean>
+
+        <bean id="quartzDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+            <property name="driverClassName" value="org.postgresql.Driver" />
+            <property name="url" value="jdbc:postgresql://192.168.1.17:5432/tomato_copy" />
+            <property name="username" value="ota" />
+            <property name="password" value="ota" />
+            <property name="defaultAutoCommit" value="false" />
+        </bean>
+
+<!--        <bean id="msgConsumer" class="com.project.consumer.MsgConsumer">
+            <constructor-arg name="consumerId" value="FQMS_CONSUMER_DEV"/>
+        </bean>-->
+    </beans>
+    <beans profile="test">
+        <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+            <property name="url" value="jdbc:postgresql://192.168.1.17:5432/tomato" />
+            <property name="username" value="ota" />
+            <property name="password" value="ota" />
+            <property name="initialSize" value="1" />
+            <property name="minIdle" value="1" />
+            <property name="maxActive" value="5" />
+            <property name="maxWait" value="60000" />
+            <property name="validationQuery" value="SELECT 'x'" />
+            <property name="testOnBorrow" value="false" />
+            <property name="testOnReturn" value="false" />
+            <property name="testWhileIdle" value="true" />
+            <property name="timeBetweenEvictionRunsMillis" value="60000" />
+            <property name="minEvictableIdleTimeMillis" value="300000" />
+            <property name="removeAbandoned" value="true" />
+            <property name="removeAbandonedTimeout" value="1800" />
+            <property name="logAbandoned" value="true" />
+            <property name="poolPreparedStatements" value="true" />
+            <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+            <property name="filters" value="mergeStat" />
+        </bean>
+
+        <bean id="quartzDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+            <property name="driverClassName" value="org.postgresql.Driver" />
+            <property name="url" value="jdbc:postgresql://192.168.1.17:5432/tomato" />
+            <property name="username" value="ota" />
+            <property name="password" value="ota" />
+            <property name="defaultAutoCommit" value="false" />
+        </bean>
+
+        <bean id="msgConsumer" class="com.project.consumer.MsgConsumer">
+            <constructor-arg name="consumerId" value="FQMS_CONSUMER_TEST"/>
+        </bean>
+    </beans>
+    <beans profile="staging">
+        <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+            <property name="url" value="jdbc:postgresql://10.163.227.13:9999/tomato_staging" />
+            <property name="username" value="ota" />
+            <property name="password" value="ota@fanqie.COM888" />
+            <property name="initialSize" value="1" />
+            <property name="minIdle" value="1" />
+            <property name="maxActive" value="5" />
+            <property name="maxWait" value="60000" />
+            <property name="validationQuery" value="SELECT 'x'" />
+            <property name="testOnBorrow" value="false" />
+            <property name="testOnReturn" value="false" />
+            <property name="testWhileIdle" value="true" />
+            <property name="timeBetweenEvictionRunsMillis" value="60000" />
+            <property name="minEvictableIdleTimeMillis" value="300000" />
+            <property name="removeAbandoned" value="true" />
+            <property name="removeAbandonedTimeout" value="1800" />
+            <property name="logAbandoned" value="true" />
+            <property name="poolPreparedStatements" value="true" />
+            <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+            <property name="filters" value="mergeStat" />
+        </bean>
+
+        <bean id="quartzDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+            <property name="driverClassName" value="org.postgresql.Driver" />
+            <property name="url" value="jdbc:postgresql://10.163.227.13:9999/tomato" />
+            <property name="username" value="ota" />
+            <property name="password" value="ota@fanqie.COM888" />
+            <property name="defaultAutoCommit" value="false" />
+        </bean>
+
+        <bean id="msgConsumer" class="com.project.consumer.MsgConsumer">
+            <constructor-arg name="consumerId" value="FQMS_CONSUMER_STAGING"/>
+        </bean>
+
+    </beans>
+    <beans profile="production">
+        <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+            <property name="url" value="jdbc:postgresql://10.163.227.13:9999/tomato" />
+            <property name="username" value="fqms_pro" />
+            <property name="password" value="jCID658FG4wr0brT" />
+            <property name="initialSize" value="1" />
+            <property name="minIdle" value="1" />
+            <property name="maxActive" value="5" />
+            <property name="maxWait" value="60000" />
+            <property name="validationQuery" value="SELECT 'x'" />
+            <property name="testOnBorrow" value="false" />
+            <property name="testOnReturn" value="false" />
+            <property name="testWhileIdle" value="true" />
+            <property name="timeBetweenEvictionRunsMillis" value="60000" />
+            <property name="minEvictableIdleTimeMillis" value="300000" />
+            <property name="removeAbandoned" value="true" />
+            <property name="removeAbandonedTimeout" value="1800" />
+            <property name="logAbandoned" value="true" />
+            <property name="poolPreparedStatements" value="true" />
+            <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+            <property name="filters" value="mergeStat" />
+        </bean>
+
+        <bean id="quartzDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+            <property name="driverClassName" value="org.postgresql.Driver" />
+            <property name="url" value="jdbc:postgresql://10.163.227.13:9999/tomato" />
+            <property name="username" value="fqms_pro" />
+            <property name="password" value="ota@fanqie.COM888" />
+            <property name="defaultAutoCommit" value="false" />
+        </bean>
+
+        <bean id="msgConsumer" class="com.project.consumer.MsgConsumer">
+            <constructor-arg name="consumerId" value="FQMS_CONSUMER"/>
+        </bean>
+
+    </beans>
+</beans>

@@ -1,0 +1,237 @@
+/*----------------数据分析--------------*/
+.clearfix{
+    clear: both;
+}
+/*顶部控制区域*/
+.ctrl-bar{
+    position: absolute;
+    left: 450px;
+    top: 18px;
+    height: 30px;
+    line-height: 30px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+/*日期选择框*/
+.ctrl-bar input[type=text]{
+    width: 100px;
+    height: 28px;
+    vertical-align: top;
+    background: #fff;
+    border: 1px solid #ccc;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+    color: #959595;
+    padding: 0;
+}
+/*下拉框*/
+.ctrl-bar select{
+    display: inline-block;
+    width: 150px;
+    height: 30px;
+    border: 1px solid #ccc;
+    vertical-align: top;
+    margin-left: 10px;
+    color: #444;
+}
+#isAcceptedOnly{
+    margin: 0 3px 0 10px;
+}
+.btn-excel{
+    height: 30px;
+    background: #62933E;
+    color: #fff;
+    line-height: 30px;
+    padding: 0 10px;
+    border: none;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.btn-excel-leaderboard{
+    float: right;
+}
+    /*内容区*/
+.wrap{
+    padding: 0 18px;
+}
+.wrap h1{
+    line-height: 40px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.wrap h1 span{
+    color: #f00;
+    padding-left: 5px;
+}
+.section{
+    overflow: hidden;
+    border: 1px solid #9c9a9a;
+    margin-bottom: 20px;
+}
+/*图表*/
+.data-chart{
+    width: 60%;
+    height: 380px;
+    float: left;
+}
+/*列表*/
+.data-list{
+    width: 38%;
+    height: 370px;
+    float: right;
+    border-left: 1px solid #9c9a9a;
+    padding: 5px;
+    overflow-y: auto;
+}
+/*.data-list */table{
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+.data-list table td,
+.data-list table th{
+    height: 30px;
+    color: #373935;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+.data-list table tr:hover{
+    cursor: pointer;
+    background-color: #f5f5f5;
+}
+.data-list table tr td:first-child{
+    text-align: left;
+    text-indent: 10px;
+    font-weight: bold;
+}
+/*----------------数据统计--------------*/
+.box{
+    margin-top: 10px;
+}
+.salestatus-title{
+    line-height: 40px;
+}
+.salestatus-title span{
+    color: #ff7019;
+}
+.salestatus-box{
+    width: 298px;
+    height: 108px;
+    border: 2px solid #62933E;
+    float: left;
+    margin-left: 12px;
+    position: relative;
+    overflow: hidden;
+}
+.salestatus-box-01{
+    margin-left: 100px;
+}
+.salestatus-box-text01{
+    text-align: center;
+    line-height: 20px;
+}
+.salestatus-box-text02{
+    text-align: center;
+    line-height: 80px;
+    font-size: 36px;
+    color: #f00;
+    padding-right: 40px;
+}
+.salestatus-box-circle{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 1px solid #444;
+    position: absolute;
+    right: -75px;
+    bottom: -68px;
+    cursor: pointer;
+}
+.salestatus-box-circle:hover{
+    background: #eee;
+}
+.salestatus-box-circle p{
+    position: absolute;
+    top: 28px;
+    left: 14px;
+}
+.salestatus-box-circle p span{
+    font-size: 16px;
+    color: #62933E;
+    font-weight: bold;
+    margin-left: -7px;
+}
+.salestatus-tips{
+    margin-left: 100px;
+}
+.salestatus-tips span{
+    color: #f00;
+    line-height: 30px;
+}
+.data-box{
+    margin-bottom: 20px;
+}
+.data-box h2{
+    height: 32px;
+    line-height: 32px;
+    background: #62933E;
+    color: #fff;
+    width: 100px;
+    padding: 0 5px;
+    text-align: center;
+    position: relative;
+}
+.data-box h2:after{
+    content: "";
+    height:0;
+    width:0;
+    position: absolute;
+    border-left:solid 16px #62933E;
+    border-top:solid 16px transparent;
+    border-bottom:solid 16px transparent;
+    right: -16px;
+}
+.graphic-box{
+    height: 400px;
+    width: 1188px;
+    margin: 10px 0 10px 20px;
+    border: 1px solid #ddd;
+}
+.tabs-nav{
+    width: 1190px;
+    margin: 10px 0 0 20px;
+    line-height: 30px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+.tabs-nav label{
+    padding: 0 10px 0 15px;
+    cursor: pointer;
+    position: relative;
+}
+.tabs-nav input[type=radio]{
+    margin-top: 9px;
+    position: absolute;
+    margin-left: -15px;
+}
+.tabs-box{
+    margin: 10px 0 0 20px;
+    width: 1190px;
+    display: none;
+}
+.tabs-box tr th,
+.tabs-box tr td{
+    height: 30px;
+    color: #373935;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+.tabs-box tr:hover{
+    background-color: #f5f5f5;
+}

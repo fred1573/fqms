@@ -1,0 +1,322 @@
+{
+	'message': '',
+	'status': 200,
+	'type': '',
+	list: [{
+		'roomDetail': [{
+			'channelPrice': 500,
+			'operatorPrice': 110,
+			'roomDate': '2016-02-02'
+		},
+		{
+			'channelPrice': 500,
+			'operatorPrice': 110,
+			'roomDate': '2016-02-03'
+         },
+         {
+            'channelPrice': 500,
+			'operatorPrice': 110,
+			'roomDate': '2016-02-04'
+          },
+          {
+          			'channelPrice': 500,
+          			'operatorPrice': 110,
+          			'roomDate': '2016-02-03'
+          },
+          {
+          			'channelPrice': 500,
+          			'operatorPrice': 110,
+          			'roomDate': '2016-02-05'
+          },
+          {
+          			'channelPrice': 500,
+          			'operatorPrice': 110,
+          			'roomDate': '2016-02-06'
+          },
+          {
+          			'channelPrice': 500,
+          			'operatorPrice': 110,
+          			'roomDate': '2016-02-07'
+          },
+          {
+          			'channelPrice': 100,
+          			'operatorPrice': 110,
+          			'roomDate': '2016-02-08'
+          },
+          {
+                    			'channelPrice': 100,
+                    			'operatorPrice': 110,
+                    			'roomDate': '2016-02-08'
+            },
+          {
+                    			'channelPrice': 100,
+                    			'operatorPrice': 110,
+                    			'roomDate': '2016-02-08'
+          },
+          {
+                    			'channelPrice': 100,
+                    			'operatorPrice': 110,
+                    			'roomDate': '2016-02-08'
+          },
+          {
+                    			'channelPrice': 100,
+                    			'operatorPrice': 110,
+                    			'roomDate': '2016-02-08'
+          },
+          {
+                    			'channelPrice': 100,
+                    			'operatorPrice': 110,
+                    			'roomDate': '2016-02-08'
+          },
+          {
+                    			'channelPrice': 100,
+                    			'operatorPrice': 110,
+                    			'roomDate': '2016-02-08'
+          },
+          {
+                    			'channelPrice': 100,
+                    			'operatorPrice': 110,
+                    			'roomDate': '2016-02-08'
+          }],
+		'roomTypeId': 123,
+		'roomTypeName': '大番茄客栈'
+	},
+	{
+		'roomDetail': [{
+                      			'channelPrice': 500,
+                      			'operatorPrice': 110,
+                      			'roomDate': '2016-02-02'
+                      		},
+                      		{
+                      			'channelPrice': 100,
+                      			'operatorPrice': 110,
+                      			'roomDate': '2016-02-03'
+                               },
+                               {
+                      			'channelPrice': 500,
+                      			'operatorPrice': 110,
+                      			'roomDate': '2016-02-04'
+                                },
+                                {
+                                			'channelPrice': 100,
+                                			'operatorPrice': 110,
+                                			'roomDate': '2016-02-03'
+                                },
+                                {
+                                			'channelPrice': 100,
+                                			'operatorPrice': 110,
+                                			'roomDate': '2016-02-05'
+                                },
+                                {
+                                			'channelPrice': 100,
+                                			'operatorPrice': 110,
+                                			'roomDate': '2016-02-06'
+                                },
+                                {
+                                			'channelPrice': 100,
+                                			'operatorPrice': 110,
+                                			'roomDate': '2016-02-07'
+                                },
+                                {
+                                			'channelPrice': 100,
+                                			'operatorPrice': 110,
+                                			'roomDate': '2016-02-08'
+                                },
+                                {
+                                          			'channelPrice': 100,
+                                          			'operatorPrice': 110,
+                                          			'roomDate': '2016-02-08'
+                                  },
+                                {
+                                          			'channelPrice': 100,
+                                          			'operatorPrice': 110,
+                                          			'roomDate': '2016-02-08'
+                                },
+                                {
+                                          			'channelPrice': 100,
+                                          			'operatorPrice': 110,
+                                          			'roomDate': '2016-02-08'
+                                },
+                                {
+                                          			'channelPrice': 100,
+                                          			'operatorPrice': 110,
+                                          			'roomDate': '2016-02-08'
+                                },
+                                {
+                                          			'channelPrice': 100,
+                                          			'operatorPrice': 110,
+                                          			'roomDate': '2016-02-08'
+                                },
+                                {
+                                          			'channelPrice': 100,
+                                          			'operatorPrice': 110,
+                                          			'roomDate': '2016-02-08'
+                                },
+                                {
+                                          			'channelPrice': 100,
+                                          			'operatorPrice': 110,
+                                          			'roomDate': '2016-02-08'
+                                }],
+		'roomTypeId': 124,
+		'roomTypeName': '四人混住'
+	},
+
+	{
+    		'roomDetail': [{
+    			'channelPrice': 100,
+    			'operatorPrice': 110,
+    			'roomDate': '2016-02-09'
+    		},
+    		{
+    			'channelPrice': 100,
+    			'operatorPrice': 110,
+    			'roomDate': '2016-02-10'
+             },
+             {
+    			'channelPrice': 100,
+    			'operatorPrice': 110,
+    			'roomDate': '2016-02-04'
+              },
+              {
+              			'channelPrice': 100,
+              			'operatorPrice': 110,
+              			'roomDate': '2016-02-11'
+              },
+              {
+              			'channelPrice': 100,
+              			'operatorPrice': 110,
+              			'roomDate': '2016-02-12'
+              },
+              {
+              			'channelPrice': 100,
+              			'operatorPrice': 110,
+              			'roomDate': '2016-02-13'
+              },
+              {
+              			'channelPrice': 100,
+              			'operatorPrice': 110,
+              			'roomDate': '2016-02-14'
+              },
+              {
+              			'channelPrice': 100,
+              			'operatorPrice': 110,
+              			'roomDate': '2016-02-15'
+              },
+              {
+                        			'channelPrice': 100,
+                        			'operatorPrice': 110,
+                        			'roomDate': '2016-02-16'
+                },
+              {
+                        			'channelPrice': 100,
+                        			'operatorPrice': 110,
+                        			'roomDate': '2016-02-17'
+              },
+              {
+                        			'channelPrice': 100,
+                        			'operatorPrice': 110,
+                        			'roomDate': '2016-02-18'
+              },
+              {
+                        			'channelPrice': 100,
+                        			'operatorPrice': 110,
+                        			'roomDate': '2016-02-19'
+              },
+              {
+                        			'channelPrice': 100,
+                        			'operatorPrice': 110,
+                        			'roomDate': '2016-02-20'
+              },
+              {
+                        			'channelPrice': 100,
+                        			'operatorPrice': 110,
+                        			'roomDate': '2016-02-21'
+              },
+              {
+                        			'channelPrice': 100,
+                        			'operatorPrice': 110,
+                        			'roomDate': '2016-02-22'
+              }],
+    		'roomTypeId': 125,
+    		'roomTypeName': 'retter'
+    	},
+    	{
+    		'roomDetail': [{
+                          			'channelPrice': 100,
+                          			'operatorPrice': 210,
+                          			'roomDate': '2016-02-23'
+                          		},
+                          		{
+                          			'channelPrice': 100,
+                          			'operatorPrice': 210,
+                          			'roomDate': '2016-02-24'
+                                   },
+                                   {
+                          			'channelPrice': 100,
+                          			'operatorPrice': 210,
+                          			'roomDate': '2016-02-25'
+                                    },
+                                    {
+                                    			'channelPrice': 100,
+                                    			'operatorPrice': 210,
+                                    			'roomDate': '2016-02-26'
+                                    },
+                                    {
+                                    			'channelPrice': 100,
+                                    			'operatorPrice': 210,
+                                    			'roomDate': '2016-02-27'
+                                    },
+                                    {
+                                    			'channelPrice': 100,
+                                    			'operatorPrice': 210,
+                                    			'roomDate': '2016-02-28'
+                                    },
+                                    {
+                                    			'channelPrice': 100,
+                                    			'operatorPrice': 210,
+                                    			'roomDate': '2016-02-29'
+                                    },
+                                    {
+                                    			'channelPrice': 100,
+                                    			'operatorPrice':210,
+                                    			'roomDate': '2016-03-01'
+                                    },
+                                    {
+                                              			'channelPrice': 100,
+                                              			'operatorPrice': 210,
+                                              			'roomDate': '2016-03-02'
+                                      },
+                                    {
+                                              			'channelPrice': 100,
+                                              			'operatorPrice': 210,
+                                              			'roomDate': '2016-03-03'
+                                    },
+                                    {
+                                              			'channelPrice': 100,
+                                              			'operatorPrice': 210,
+                                              			'roomDate': '2016-03-04'
+                                    },
+                                    {
+                                              			'channelPrice': 100,
+                                              			'operatorPrice': 210,
+                                              			'roomDate': '2016-03-05'
+                                    },
+                                    {
+                                              			'channelPrice': 100,
+                                              			'operatorPrice': 210,
+                                              			'roomDate': '2016-03-06'
+                                    },
+                                    {
+                                              			'channelPrice': 100,
+                                              			'operatorPrice': 210,
+                                              			'roomDate': '2016-03-07'
+                                    },
+                                    {
+                                              			'channelPrice': 100,
+                                              			'operatorPrice': 210,
+                                              			'roomDate': '2016-03-08'
+                                    }],
+    		'roomTypeId': 126,
+    		'roomTypeName': '324s1'
+    	}]
+}

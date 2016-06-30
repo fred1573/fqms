@@ -1,0 +1,187 @@
+.window-dialog{
+    /*display: block;*/
+    width: 900px;
+    background: #fff;
+    float: left;
+    margin-left: -425px;
+    position:relative;
+}
+.close-window{
+    position: absolute;
+    right: -30px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    background: #000;
+    top: 0;
+    color: #fff !important;
+    text-align: center;
+    font-size: 18px;
+}
+.dialog-center-box{
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 20%;
+    left: 50%;
+    z-index: 300;
+}
+.window-dialog h1{
+    font-size:16px;
+    font-weight:bold;
+    padding-bottom:15px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom:15px;
+}
+.patternInfo{
+    width: 100%;
+    float: left;
+    margin-bottom:20px;
+}
+.channelRoomTypeName {
+    width: 100%;
+}
+.patternInfo1{
+    position: relative;
+}
+.center-box-in .patternInfo li{
+    width: 150px;
+}
+.center-box-in .patternInfo li input{
+    width:100px;
+}
+.patternInfo>li{
+    float: left;
+    padding-right:10px;
+}
+.patternInfo>li>div{
+    padding-bottom: 10px;
+}
+.deleteChannalOrder {
+    margin-left: 10px;
+}
+.patternInfo .ipt-pattern{
+    width: 50px;
+    text-indent: 10px;
+    height: 20px;
+    vertical-align: middle;
+    margin: 0 5px;
+}
+.patternInfo .ipt-innInfo{
+    width: 100px;
+    text-indent: 10px;
+}
+.room-type{
+    width: 100px;
+    font-size: 12px;
+    height: 20px;
+}
+.patternInfo .modify-reason{
+    width:430px;
+    text-indent: 10px;
+}
+.footbtn{
+    float: left;
+    text-align: center;
+    width: 98%;
+}
+.footbtn button{
+    line-height: 30px;
+    width: 100px;
+}
+/*#channelOrderList>div>div{
+    padding-bottom: 10px;
+}*/
+.channelRoomTypeName {
+    max-height: 200px;
+    overflow-y: auto;
+    width: 800px;
+}
+.channelRoomTypeName > div {
+    position: relative;
+}
+#channelOrderList>div>div {
+    position: relative;
+    margin-bottom: 10px;
+}
+.delete-mask {
+    position: absolute;
+    top: -5px;
+    height: 32px;
+    background: #ccc;
+    width: 83%;
+    opacity: 0.8;
+    left: -10px;
+    display: none;
+}
+.delete-liner {
+    position: absolute;
+    border-bottom: 1px solid #000;
+    width: 83%;
+    height: 1px;
+    top: 10px;
+    left: -10px;
+    display: none;
+}
+.header-sub-tab {
+    margin-left: 20px;
+    float: left;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+.header-sub-tab a {
+    padding: 10px;
+    background: #62933E;
+    color: #fff;
+}
+.header-sub-tab .active {
+    color: #62933e;
+    background: #fff;
+    border: 1px solid #d5d8da;
+}
+.patternInfo>li .ordinary-order,
+.patternInfo>li .payout-order,
+.patternInfo>li .refund-order,
+.patternInfo>li .replenishment-order {
+    display: none;
+    padding-bottom: 0;
+    color: red;
+}
+.patternInfo>li .ordinary-order {
+    display:table;
+}
+.ordinary-order>div,
+.payout-order>div,
+.refund-order>div,
+.replenishment-order>div {
+    display: table-cell;
+    padding-right: 5px;
+}
+
+
+.header-sub-tab1 {
+    margin-left: 0px;
+
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+.header-sub-tab1 a {
+    padding: 10px;
+    background: #62933E;
+    color: #fff;
+}
+.header-sub-tab1 .active {
+    color: #62933e;
+    background: #fff;
+    border: 1px solid #d5d8da;
+}
+.channelRoomTypeName .room-type {
+    padding-right: 30px;
+}
+.refund-order .fqRefundCommissionOutDiv {
+    display: none;
+}
+.patternInfo .channelRoomTypeName {
+    width: 100%;
+    padding-right: 0;
+}

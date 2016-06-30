@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.proxysale.OrderComplaintProcessLogDao">
+
+    <resultMap id="orderComplaintProcessLog" type="com.project.entity.proxysale.OrderComplaintProcessLog">
+        <id column="id" property="id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="processUserId" column="process_user_id"/>
+        <result property="processUserName" column="process_user_name"/>
+        <result property="complaintType" column="complaint_type"/>
+        <result property="note" column="note"/>
+        <result property="orderComplaintId" column="order_complaint_id"/>
+        <result property="complaintStatus" column="complaint_status"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.project.entity.proxysale.OrderComplaintProcessLog">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            select nextval('tomato_order_complaint_process_log_id_seq'::regclass)
+        </selectKey>
+        insert into tomato_order_complaint_process_log
+        (id,create_time,update_time,process_user_id,process_user_name,complaint_type,note,order_complaint_id,complaint_status)
+        values
+        (#{id},#{createTime},#{updateTime},#{processUserId},#{processUserName},#{complaintType},#{note},#{orderComplaintId},#{complaintStatus})
+    </insert>
+
+    <select id="selectByOrderComplaintId" resultMap="orderComplaintProcessLog">
+        select * from tomato_order_complaint_process_log where order_complaint_id=#{complaintId}
+    </select>
+
+
+    <select id="selectByOrderNo" resultMap="orderComplaintProcessLog">
+        select tocpl.* from tomato_order_complaint_process_log as tocpl
+        inner join tomato_proxysale_order_complaint as tpoc on tpoc.id=tocpl.order_complaint_id
+        where tpoc.order_no=#{orderNo}
+    </select>
+
+</mapper>

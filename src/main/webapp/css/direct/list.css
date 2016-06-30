@@ -1,0 +1,95 @@
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+.red {
+    color: red;
+}
+.room-price-info {
+    max-height: 250px;
+    overflow: auto;
+    width: 292px;
+    border: 1px solid #000;
+}
+
+.room-price-info table {
+    border-collapse: collapse;
+}
+
+.room-price-info tr td, .room-price-info tr th {
+    padding: 10px;
+    border: 1px solid #000;
+}
+
+.room-price-info tr td:first-child {
+    width: 150px;
+}
+
+.center-box-in h3 {
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+    background: #ccc;
+}
+
+.foot {
+    padding: 10px 0;
+    margin-top: 10px;
+    float: left;
+    background: #ccc;
+    width: 100%;
+}
+
+.foot button {
+    margin-left: 27px;
+    padding: 10px;
+    background: #ccc;
+}
+
+.mark {
+    width: 98%;
+    height: 50px;
+    margin: 10px 0;
+}
+
+.duizhang input.date {
+    width: 100px;
+    height: 28px;
+    line-height: 28px;
+    text-indent: 5px;
+    margin: 0 5px;
+}
+.handle-report > div {
+    margin: 10px 0;
+}
+.handle-list > div {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+.handle-list > div > div {
+    padding: 5px 0;
+}
+.header {
+    height: 80px;
+}
+.header-button-box a.add {
+    margin: 0;
+}
+.ks-center-nav {
+    height: 30px;
+    line-height: 30px;
+    background: #D70007;
+    color: #fff;
+    padding: 0 15px;
+    margin-top: 20px;
+}
+.handle-list {
+    max-height: 400px;
+    overflow: auto;
+}
+.handleStatus i {
+    padding: 0 5px;
+}
